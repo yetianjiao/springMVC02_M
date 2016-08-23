@@ -1,9 +1,13 @@
 本项目整合了springMVC和Mybatis；
-（1）搭建环境
-spring 所有jar包 3.2
-数据库驱动包 mysql
-mybatis jar
-mybatis 和spring 整合的包
-log4j
-数据库连接池：dbcp（或c3p0）
-JSTL
+(1)搭建环境
+	spring 所有jar包 3.2
+	数据库驱动包 mysql
+	mybatis jar
+	mybatis 和spring 整合的包
+	log4j
+	数据库连接池：dbcp（或c3p0）
+	JSTL
+(2)相关配置
+	mybatis:sqlMapConfig.xml
+	spring:applicationContext-dao.xml
+	
