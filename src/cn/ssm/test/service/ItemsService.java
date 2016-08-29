@@ -9,8 +9,13 @@ import java.util.*;
  * @author Yetianjiao
  *
  */
-public interface ItemsService {
+public interface ItemsService{
 	//商品查询列表
 	public List<ItemsCustom> findItemsList(ItemsQueryVo itemsQueryVo) 
 			throws Exception;
+	//根据id查找商品
+	public ItemsCustom findItemsById(int id) throws Exception;
+	
+	//根据id修改商品
+	public void updateitems(Integer id,ItemsCustom itemsCustom)throws Exception;
 }
