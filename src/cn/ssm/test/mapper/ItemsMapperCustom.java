@@ -8,4 +8,6 @@ import cn.ssm.test.po.ItemsQueryVo;
 public interface ItemsMapperCustom {
     public List<ItemsCustom> findItemsList(ItemsQueryVo itemsQueryVo) 
     		throws Exception;
+
+	public void deleteItemsQuery(String[] names);
 }

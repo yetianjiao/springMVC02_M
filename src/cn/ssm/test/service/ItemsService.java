@@ -18,4 +18,6 @@ public interface ItemsService{
 	
 	//根据id修改商品
 	public void updateitems(Integer id,ItemsCustom itemsCustom)throws Exception;
+	
+	public void deleteItemsQuery(String[] names);
 }

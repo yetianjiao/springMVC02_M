@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import com.sun.xml.internal.bind.v2.model.core.ID;
 
 import cn.ssm.test.mapper.ItemsMapper;
 import cn.ssm.test.mapper.ItemsMapperCustom;
@@ -13,7 +14,6 @@ import cn.ssm.test.po.ItemsCustom;
 import cn.ssm.test.po.ItemsQueryVo;
 import cn.ssm.test.service.ItemsService;
 
-@Service
 public class ItemsServiceIpml implements ItemsService {
 	//mapper自动注入,在spring/applicationContext-dao.xml中已经设置了自动扫描
 	@Autowired
@@ -48,6 +48,11 @@ public class ItemsServiceIpml implements ItemsService {
 		itemsCustom.setId(id);
 		itemsmapper.updateByPrimaryKeyWithBLOBs(itemsCustom);
 		//
+	}
+
+	@Override
+	public void deleteItemsQuery(String[] names) {
+		itemsMapperCustom.deleteItemsQuery(names);
 	}
 
 }

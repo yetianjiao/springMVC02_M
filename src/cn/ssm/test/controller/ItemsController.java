@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.ssm.test.po.ItemsCustom;
+import cn.ssm.test.po.ItemsQueryVo;
 import cn.ssm.test.service.ItemsService;
 
 /**
  * 
  * @author Yetianjiao
  * 控制器
+ * 首页：http://localhost:8080/springMVC02_M/items/queryItems.action
  */
 
 @Controller
@@ -32,9 +34,9 @@ public class ItemsController {
 	public ItemsService itemsService;
 	//商品查询
 	@RequestMapping("/queryItems")
-	public ModelAndView queryItems() throws Exception{
+	public ModelAndView queryItems(ItemsQueryVo itemsQueryVo) throws Exception{
 			// 调用service查找数据库，查询商品列表，此处用静态数据模拟
-			List<ItemsCustom> itemsList = itemsService.findItemsList(null);
+			List<ItemsCustom> itemsList = itemsService.findItemsList(itemsQueryVo);
 			
 			//返回modleandview
 			ModelAndView mv =new ModelAndView();
@@ -127,6 +129,13 @@ public class ItemsController {
 		System.out.println("~~~~~~~~~~~~~~~~~"+name);
 		itemsService.updateitems(id, itemsCustom);
 		return "redirect:queryItems.action";
-	
+	}
+
+
+//批量删除商品信息
+@RequestMapping("/deleteItems")
+	public String deleteItems(String[] names)throws Exception{
+		itemsService.deleteItemsQuery(names);
+		return "success";
 	}
 }

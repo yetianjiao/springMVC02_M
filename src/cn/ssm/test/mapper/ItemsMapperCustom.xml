@@ -4,8 +4,9 @@
 	<!-- 商品列表查询 -->
 	<!-- 建议:paramterType传入一个包装对象 （包装了查询条件）
 		resultType建议使用扩展对象-->
-	<select id="findItemsList" parameterType="cn.ssm.test.po.ItemsQueryVo" resultType="cn.ssm.test.po.ItemsCustom" >
-		SELECT items.* FROM items
+	<select id="findItemsList" parameterType="cn.ssm.test.po.ItemsQueryVo" 
+			resultType="cn.ssm.test.po.ItemsCustom" >
+		SELECT items1.* FROM items1
 		<where>
 			<include refid="query_items_where"></include>
 		</where>
@@ -17,8 +18,16 @@
 	<!-- 商品的查询条件通过 ItemsQueryVo包装对象中的itemsCustom属性传递-->
 		<if test="itemsCustom!=null">
 			<if test="itemsCustom.name!=null and  itemsCustom.name !=''">
-				items.name LIKE %${itemsCustom.name}%
+				items.name LIKE '%${itemsCustom.name}%'
 			</if>
 		</if>
 	</sql>
+	
+	<!-- 参数为数组进行批量删除 -->
+	<delete id="deleteItemsQuery" parameterType="java.lang.String">
+		DELETE FROM items1 where name in 
+		<foreach item="names" collection="array" open="(" separator="," close=")">
+			#{names}
+		</foreach>
+	</delete>
 </mapper>
