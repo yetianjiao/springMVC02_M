@@ -59,7 +59,6 @@ public class ItemsController {
 	 */
 //@RequestMapping(value="/editItems",method={RequestMethod.GET,RequestMethod.POST})	
 //	public ModelAndView editItems() throws Exception{
-//		
 //		//调用service根据id查询
 //		ItemsCustom itemsCustom=itemsService.findItemsById(1);
 //		ModelAndView mv=new ModelAndView();
@@ -74,14 +73,19 @@ public class ItemsController {
 	 * @return String
 	 * @throws Exception
 	 */
-@RequestMapping(value="/editItems",method={RequestMethod.GET,RequestMethod.POST})
 
-	//	为使用@RequestParam，此时的id和jsp页面的id必须对应
-	//	public String editItems(Model model,Integer id) throws Exception{
+//	//未使用@RequestParam，此时的id和jsp页面的id必须对应
+//	public String editItems(Model model,Integer id) throws Exception{
+//	ItemsCustom itemsCustom=itemsService.findItemsById(id);
+//	model.addAttribute(itemsCustom);
+//	return "items/editItems";
+//	}
 
 	//@RequestParam 若形参跟jsp页面参数不一致可以通过value设置，
 	//此外，还可以通过defaultvalue指定默认值，当没有id传入的时候，将默认值和形参绑定
 	//也可以设置required=true限定id必须有值传入，否则页面报400错误
+	//该id来自于url中传递的参数值id而不是itemsCustom.id
+	@RequestMapping(value="/editItems",method={RequestMethod.GET,RequestMethod.POST})
 	public String editItems(Model model,
 			@RequestParam(value="id",defaultValue="1") Integer items_id) throws Exception{
 		ItemsCustom itemsCustom=itemsService.findItemsById(items_id);
@@ -116,11 +120,11 @@ public class ItemsController {
 //		}
 
 @RequestMapping("/editItemsSubmit")
-	public String editItemsSubmit(Integer id,ItemsCustom itemsCustom) throws Exception{
+	public String editItemsSubmit(Integer id,String name,ItemsCustom itemsCustom) throws Exception{
 //		重定向至商品展示页面，浏览器地址栏中的url会变化。
 //		修改提交的request数据无法传到重定向的地址。因为重定向后重新进行request（request无法共享）
 //		redirct提交
-		
+		System.out.println("~~~~~~~~~~~~~~~~~"+name);
 		itemsService.updateitems(id, itemsCustom);
 		return "redirect:queryItems.action";
 	

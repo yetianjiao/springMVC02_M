@@ -22,13 +22,29 @@
 	 -->
 	<context:component-scan base-package="cn.ssm.test.controller"></context:component-scan>
 	
-		<!--
+	<!--
 		 使用mvc的注解驱动mvc:annotation-driven，可以省去上边的注解映射器和注解适配器 
 		比如json转换解析器就默认加载了，如果使用mvc:annotation-driven，就不用配置RequestMappingHandlerMapping和RequestMappingHandlerAdapter
 		实际开发中使用annotation-driven
 	-->
-	<mvc:annotation-driven></mvc:annotation-driven>
-
+	<!-- 
+		由于简化了适配器映射器的配置，没有办法直接在适配器中配置converter，所以在mvc:annotation-driven中注入
+		conversion-service引用了一个bean，这个bean完成了自定义参数绑定
+	-->
+	<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+	
+	<!-- 自定义参数绑定 -->
+	<bean id="conversionService" 
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 在FormattingConversionServiceFactoryBean中注入自己的转换器 -->
+		<property name="converters">
+			<!-- 有list可以知道，我们可以有多个转换器 -->
+			<list>
+				<bean class="cn.ssm.test.controller.converter.CustomDataConverter"/>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- 视图解析器 ,解析jsp，默认使用jstl标签-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 配置前缀 -->
@@ -38,3 +54,4 @@
 	</bean>
 
 </beans>
+
