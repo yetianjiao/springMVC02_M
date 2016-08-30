@@ -20,4 +20,6 @@ public interface ItemsService{
 	public void updateitems(Integer id,ItemsCustom itemsCustom)throws Exception;
 	
 	public void deleteItemsQuery(String[] names);
+	
+	public void insertItems(ItemsCustom itemsCustom);
 }

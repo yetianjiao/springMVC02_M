@@ -138,4 +138,16 @@ public class ItemsController {
 		itemsService.deleteItemsQuery(names);
 		return "success";
 	}
+
+//跳转至添加商品的视图
+	@RequestMapping("/addItems")
+	public String addItems() throws Exception{
+		return "items/addItems";
+	}
+//跳转至添加商品的视图
+	@RequestMapping("/addItemsSubmit")
+	public String addItems(ItemsCustom itemsCustom) throws Exception{
+		itemsService.insertItems(itemsCustom);
+		return "redirect:queryItems.action";
+	}
 }

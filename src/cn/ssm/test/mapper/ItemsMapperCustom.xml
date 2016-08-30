@@ -30,4 +30,10 @@
 			#{names}
 		</foreach>
 	</delete>
+	
+	<insert id="insert" parameterType="cn.ssm.test.po.Items" >
+    	insert into items1 (id, name, price,pic, createtime, detail)
+    		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+     		#{pic,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{detail,jdbcType=LONGVARCHAR})
+  </insert>
 </mapper>

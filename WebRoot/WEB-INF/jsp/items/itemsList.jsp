@@ -18,6 +18,11 @@ function queryItems(){
 	document.itemsForm.action="${pageContext.request.contextPath }/items/queryItems.action";
 	document.itemsForm.submit();
 }
+function addItems(){
+	//提交form
+	document.itemsForm.action="${pageContext.request.contextPath }/items/addItems.action";
+	document.itemsForm.submit();
+}
 </script>
 </head>
 <body>  
@@ -26,12 +31,15 @@ function queryItems(){
 查询条件：
 	<table width="100%" border=1>
 		<tr>
-			<td width="200px">商品名称：<input name="itemsCustom.name" type="text"/></td>
-			<td><input type="button" value="查询" onclick="queryItems()"/></td>
+			<td width="350px"><input type="button" value="要查询的商品名称" onclick="queryItems()"/><input name="itemsCustom.name" type="text"/></td>
+		</tr>
+		<tr>
 			<td><input type="button" value="批量删除" onclick="deleteItems()"/></td>
 		</tr>
+		<tr>
+			<td><input type="button" value="新增商品" onclick="addItems()"/></td>
+		</tr>
 	</table>
-
 商品列表：
 <table width="100%" border=1>
 <tr>

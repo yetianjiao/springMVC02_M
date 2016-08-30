@@ -20,6 +20,7 @@ public class ItemsServiceIpml implements ItemsService {
 		private ItemsMapperCustom itemsMapperCustom;
 	@Autowired
 		private ItemsMapper itemsmapper;
+	
 	@Override
 	public List<ItemsCustom> findItemsList(ItemsQueryVo itemsQueryVo) 
 			throws Exception {
@@ -53,6 +54,28 @@ public class ItemsServiceIpml implements ItemsService {
 	@Override
 	public void deleteItemsQuery(String[] names) {
 		itemsMapperCustom.deleteItemsQuery(names);
+	}
+	
+//	使用逆向生成的ItemsMapper
+//	@Override
+//	public void insertItems(ItemsCustom itemsCustom) {
+//		Items items=new Items();
+//		BeanUtils.copyProperties(itemsCustom, items);
+//		System.out.println("items"+items);
+//		System.out.println("itemscustom"+itemsCustom);
+//		int i=itemsmapper.insert(items);
+//		System.out.println(~~~~~~~~~~~~~~i);
+//	}
+	
+	//使用自己定义的ItemsMapperCustem
+	@Override
+	public void insertItems(ItemsCustom itemsCustom) {
+		Items items=new Items();
+		BeanUtils.copyProperties(itemsCustom, items);
+		System.out.println("items"+items);
+		System.out.println("itemscustom"+itemsCustom);
+		int i=itemsMapperCustom.insert(items);
+		System.out.println(~~~~~~~~~~~~~~i);
 	}
 
 }
