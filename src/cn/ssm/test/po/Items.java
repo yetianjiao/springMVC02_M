@@ -5,16 +5,19 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import cn.ssm.test.validateGroup.ValidateGroup1;
+import cn.ssm.test.validateGroup.ValidateGroup2;
+
 public class Items {
     private Integer id;
     //校验名称1~30中间
-    @Size(min=1,max=30,message="{items.name.length.error}")
+    @Size(min=1,max=30,message="{items.name.length.error}",groups={ValidateGroup1.class,ValidateGroup2.class})
     private String name;
 
     private Float price;
 
     private String pic;
-    @NotNull(message="{items.createtime.idNull}")
+    @NotNull(message="{items.createtime.idNull}",groups={ValidateGroup1.class})
     private Date createtime;
 
     private String detail;

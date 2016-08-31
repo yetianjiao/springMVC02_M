@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.ssm.test.po.ItemsCustom;
 import cn.ssm.test.po.ItemsQueryVo;
 import cn.ssm.test.service.ItemsService;
+import cn.ssm.test.validateGroup.ValidateGroup2;
 
 /**
  * 
@@ -131,7 +132,7 @@ public class ItemsController {
 	//@Validated,BindingResult配对出现，并且顺序一定
 @RequestMapping("/editItemsSubmit")
 	public String editItemsSubmit(Integer id,Model model,
-			@Validated ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception{
+			@Validated(value=ValidateGroup2.class) ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception{
 	//获取校验信息
 		if(bindingResult.hasErrors())
 		{

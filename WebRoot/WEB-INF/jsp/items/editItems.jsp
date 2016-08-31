@@ -13,7 +13,7 @@
 <!-- 显示错误信息： -->
 <c:if test="${allErrors!=null}">
 	<c:forEach items="${allErrors}" var="error">
-		${error.defaultMessage}
+		${error.defaultMessage}<br/>
 	</c:forEach> 
 </c:if>
 <form id="itemForm" action="${pageContext.request.contextPath }/items/editItemsSubmit.action" method="post" >
