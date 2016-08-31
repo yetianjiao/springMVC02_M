@@ -1,9 +1,9 @@
 package cn.ssm.test.exception;
 
 /**
- *  系统自定义异常，针对预期的异常，需要在程序中抛出此类异常
+ * 系统自定义异常，针对预期的异常，需要在程序中抛出此类异常
  * @author Yetianjiao
- *
+ * name
  */
 public class CustomException extends Exception{
 	//异常信息
