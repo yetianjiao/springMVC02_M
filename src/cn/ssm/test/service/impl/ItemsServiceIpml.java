@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
+import cn.ssm.test.exception.CustomException;
 import cn.ssm.test.mapper.ItemsMapper;
 import cn.ssm.test.mapper.ItemsMapperCustom;
 import cn.ssm.test.po.Items;
@@ -33,8 +34,14 @@ public class ItemsServiceIpml implements ItemsService {
 		//考虑到程序的扩展性
 		//对商品信息进行处理，最终返回处理后的东西而不是原始数据库的内容
 		//本例没有进行处理，只是简单的吧items的内容赋给itemsCustom
-		ItemsCustom itemsCustom=new ItemsCustom();
-		BeanUtils.copyProperties(items, itemsCustom);
+		ItemsCustom itemsCustom=null;
+		if (items!=null) {
+			itemsCustom=new ItemsCustom();
+			BeanUtils.copyProperties(items, itemsCustom);
+		}
+//			else{
+//			throw new CustomException("查到的为空，service层抛出异常CustomException");
+//		}
 		return itemsCustom;
 	}
 

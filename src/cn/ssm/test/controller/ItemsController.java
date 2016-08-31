@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.annotations.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.ssm.test.exception.CustomException;
+import cn.ssm.test.po.Items;
 import cn.ssm.test.po.ItemsCustom;
 import cn.ssm.test.po.ItemsQueryVo;
 import cn.ssm.test.service.ItemsService;
@@ -96,6 +97,10 @@ public class ItemsController {
 	public String editItems(Model model,
 			@RequestParam(value="id",defaultValue="1") Integer items_id) throws Exception{
 		ItemsCustom itemsCustom=itemsService.findItemsById(items_id);
+		if(itemsCustom == null)
+		{
+			throw new CustomException("itemsCustom为空！！！controller抛出异常");
+		}
 		//通过形参中的model将model数据传到页面
 		//等价于ModelAndView.addObject(itemsCustom);
 		model.addAttribute(itemsCustom);
@@ -132,7 +137,8 @@ public class ItemsController {
 	//@Validated,BindingResult配对出现，并且顺序一定
 @RequestMapping("/editItemsSubmit")
 	public String editItemsSubmit(Integer id,Model model,
-			@Validated(value=ValidateGroup2.class) ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception{
+			@Validated(value=ValidateGroup2.class) ItemsCustom itemsCustom,
+			BindingResult bindingResult) throws Exception{
 	//获取校验信息
 		if(bindingResult.hasErrors())
 		{
@@ -170,6 +176,7 @@ public class ItemsController {
 	//跳转至添加商品的视图
 	@RequestMapping("/addItemsSubmit")
 	public String addItems(ItemsCustom itemsCustom) throws Exception{
+		
 		itemsService.insertItems(itemsCustom);
 		return "redirect:queryItems.action";
 	}
