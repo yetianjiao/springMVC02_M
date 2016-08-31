@@ -9,6 +9,9 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -122,12 +125,30 @@ public class ItemsController {
 //		return mv;
 //		}
 
+	
+	//@Validated对页面传来的itemsCustom进行校验
+	//BindingResult接收校验出错信息
+	//@Validated,BindingResult配对出现，并且顺序一定
 @RequestMapping("/editItemsSubmit")
-	public String editItemsSubmit(Integer id,String name,ItemsCustom itemsCustom) throws Exception{
-//		重定向至商品展示页面，浏览器地址栏中的url会变化。
-//		修改提交的request数据无法传到重定向的地址。因为重定向后重新进行request（request无法共享）
-//		redirct提交
-		System.out.println("~~~~~~~~~~~~~~~~~"+name);
+	public String editItemsSubmit(Integer id,Model model,
+			@Validated ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception{
+	//获取校验信息
+		if(bindingResult.hasErrors())
+		{
+			List<ObjectError> allErrors=bindingResult.getAllErrors();
+//			控制台打印
+//			for(ObjectError objectError:allErrors)
+//			{
+//				System.out.println(objectError.getDefaultMessage());
+//			}
+			//错误信息传到商品修改页面
+			model.addAttribute("allErrors", allErrors);
+			return "items/editItems";
+		}
+	
+	//重定向至商品展示页面，浏览器地址栏中的url会变化。
+	//修改提交的request数据无法传到重定向的地址。因为重定向后重新进行request（request无法共享）
+	//redirct提交
 		itemsService.updateitems(id, itemsCustom);
 		return "redirect:queryItems.action";
 	}
