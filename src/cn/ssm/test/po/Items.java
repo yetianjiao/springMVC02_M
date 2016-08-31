@@ -62,4 +62,22 @@ public class Items {
     public void setDetail(String detail) {
         this.detail = detail == null ? null : detail.trim();
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Items [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", createtime=");
+		builder.append(createtime);
+		builder.append(", detail=");
+		builder.append(detail);
+		builder.append("]");
+		return builder.toString();
+	}
+    
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -133,21 +134,43 @@ public class ItemsController {
 
 
 //批量删除商品信息
-@RequestMapping("/deleteItems")
+	@RequestMapping("/deleteItems")
 	public String deleteItems(String[] names)throws Exception{
 		itemsService.deleteItemsQuery(names);
 		return "success";
 	}
-
-//跳转至添加商品的视图
+//添加商品
+	//跳转至添加商品的视图
 	@RequestMapping("/addItems")
 	public String addItems() throws Exception{
 		return "items/addItems";
 	}
-//跳转至添加商品的视图
+	//跳转至添加商品的视图
 	@RequestMapping("/addItemsSubmit")
 	public String addItems(ItemsCustom itemsCustom) throws Exception{
 		itemsService.insertItems(itemsCustom);
 		return "redirect:queryItems.action";
 	}
+	
+//批量修改页面
+	//跳转至该页面
+	@RequestMapping("/editItemsQuery")
+	public ModelAndView editItemsQuery(ItemsQueryVo itemsQueryVo) throws Exception {
+		List<ItemsCustom> itemsList = itemsService.findItemsList(itemsQueryVo);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("itemsList", itemsList);
+		mv.setViewName("items/editItemsQuery");
+		return mv;
+	}
+	//提交修改
+	//通过ItemsQueryVo中定义的list属性来接收页面传来的list
+	@RequestMapping("/editItemsQuerySubmit")
+	public String  editItemsQuerySubmit(ItemsQueryVo itemsQueryVo) throws Exception{
+		for (ItemsCustom i : itemsQueryVo.getItemsList()) {
+			System.out.println(i);
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		}
+		return "redirect:queryItems.action";
+	}
+	
 }
