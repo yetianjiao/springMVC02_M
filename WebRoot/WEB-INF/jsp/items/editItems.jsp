@@ -17,7 +17,8 @@
 	</c:forEach> 
 </c:if>
 
-<form id="itemForm" action="${pageContext.request.contextPath }/items/editItemsSubmit.action" method="post" >
+<form id="itemForm" action="${pageContext.request.contextPath }/items/editItemsSubmit.action" 
+	method="post" enctype="multipart/form-data" >
 <input type="hidden" name="id" value="${itemsCustom.id }"/>
 修改商品信息：
 <table width="100%" border=1>
@@ -33,16 +34,17 @@
 	<td>商品生产日期</td>
 	<td><input type="text" name="createtime" value="<fmt:formatDate value="${itemsCustom.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/></td>
 </tr>
-<%-- <tr>
+<tr>
 	<td>商品图片</td>
 	<td>
-		<c:if test="${item.pic !=null}">
-			<img src="/pic/${item.pic}" width=100 height=100/>
+		<c:if test="${itemsCustom.pic !=null}">
+			<img src="/pic/${itemsCustom.pic}" width=100 height=100/>
 			<br/>
 		</c:if>
 		<input type="file"  name="pictureFile"/> 
 	</td>
-</tr> --%>
+</tr>
+
 <tr>
 	<td>商品简介</td>
 	<td>

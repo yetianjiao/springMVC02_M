@@ -72,5 +72,15 @@
 	
 	<!-- 全局异常处理器,只能有一个，只要实现了HandlerExceptionResolver接口即使全局异常处理器-->
 	<bean class="cn.ssm.test.exception.CoustomExceptionResolver"/>
+	
+	<!-- 配置解析器 -->
+		<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为5MB -->
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>
+	 
 </beans>
 

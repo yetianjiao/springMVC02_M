@@ -1,9 +1,12 @@
 package cn.ssm.test.controller;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.ssm.test.exception.CustomException;
@@ -138,7 +142,9 @@ public class ItemsController {
 @RequestMapping("/editItemsSubmit")
 	public String editItemsSubmit(Integer id,Model model,
 			@Validated(value=ValidateGroup2.class) ItemsCustom itemsCustom,
-			BindingResult bindingResult) throws Exception{
+			BindingResult bindingResult,
+			@RequestParam("pictureFile") MultipartFile items_pic//用于接收商品图片
+			) throws Exception{
 	//获取校验信息
 		if(bindingResult.hasErrors())
 		{
@@ -152,7 +158,27 @@ public class ItemsController {
 			model.addAttribute("allErrors", allErrors);
 			return "items/editItems";
 		}
-	
+		
+		//上传图片的原始名称
+		String originalFilename=items_pic.getOriginalFilename();
+		//上传图片，如果接收到的文件不为空则上传,
+		//由于数据库中只有名称，展示页面和上传空间实际是两个组件,
+		//修改页面没有做出修改的时候提交时候，页面传来的items_pic和名字均为空
+		if(items_pic!= null && originalFilename!=null && originalFilename.length()>0)
+		{
+			//储存图片的物理位置
+			String pic_path="G:\\pic\\";
+			//新的名称=随机数+原来图片的扩展名
+			String newFile_name=UUID.randomUUID()+originalFilename.
+					substring(originalFilename.lastIndexOf("."));
+			//新图片
+			File newFile =new File(pic_path+newFile_name);
+			//将内存中的数据写入磁盘
+			items_pic.transferTo(newFile);
+			//将新的文件名称传入itemsCustom
+			itemsCustom.setPic(newFile_name);
+		}
+
 	//重定向至商品展示页面，浏览器地址栏中的url会变化。
 	//修改提交的request数据无法传到重定向的地址。因为重定向后重新进行request（request无法共享）
 	//redirct提交
@@ -167,6 +193,7 @@ public class ItemsController {
 		itemsService.deleteItemsQuery(names);
 		return "success";
 	}
+	
 //添加商品
 	//跳转至添加商品的视图
 	@RequestMapping("/addItems")
