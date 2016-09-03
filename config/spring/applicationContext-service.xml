@@ -15,5 +15,4 @@
 
 	<!-- 商品管理的service -->
 	<bean id="itemsService" class="cn.ssm.test.service.impl.ItemsServiceIpml"/>
-	
 </beans>

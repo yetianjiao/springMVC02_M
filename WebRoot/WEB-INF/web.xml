@@ -2,7 +2,7 @@
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>springMVC01</display-name>
 	
-	<!-- 加载spring容器 -->
+	<!-- 加载spring容器1 *.action -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/spring/applicationContext-*.xml</param-value>
@@ -28,9 +28,9 @@
 		<servlet-name>springmvc</servlet-name>
 		<!-- 
 			url的几种配置方式：
-			*.action：以.action结尾的都以DispatherServlet进行解析
-			/ ：所有访问地址都由DispatherServlet进行解析，此时，静态文件中的解析需要配置使其不被DispatherServlet解析
-			/*:不对，使用这种配置，最终要转发到一个jsp页面时，仍然会由DispatherServlet来解析jsp页面，不能根据jsp页面找到handler，报错
+			(1)*.action：以.action结尾的都以DispatherServlet进行解析
+			(2)/ ：所有访问地址都由DispatherServlet进行解析，此时，静态文件中的解析需要配置使其不被DispatherServlet解析，此时不是jsp页面
+			(3)/*:不对，使用这种配置，最终要转发到一个jsp页面时，仍然会由DispatherServlet来解析jsp页面，不能根据jsp页面找到handler，报错
 		 -->
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
@@ -48,5 +48,19 @@
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- springmvc前端控制器2 .RESTful风格的url，两个前端控制器可以并存 -->
+	<servlet>
+		<servlet-name>springmvc_rest</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/springmvc.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc_rest</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 	
 </web-app>

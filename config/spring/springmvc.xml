@@ -13,7 +13,11 @@
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
 
-
+	<!-- 静态资源解析，包括js/css/img…… -->
+	<!-- 访问js打头的url时，映射到js下所有的文件 -->
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/img/" mapping="/img/**"/>
+	
 	<!-- 注解的handler -->
 	<!-- <bean class="cn.springmvco1.controller.ItermsController03"/> -->
 	<!-- 实际开发中建议使用组件扫描，扫描多个controller、service…… 这里扫描controller，指定controller的包即可 -->
